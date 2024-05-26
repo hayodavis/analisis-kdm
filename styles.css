@@ -1,0 +1,104 @@
+/* Style untuk elemen form */
+form {
+  max-width: 600px; /* Lebar maksimum form */
+  margin: 0 auto; /* Pusatkan form di tengah */
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style untuk elemen label */
+label {
+  display: block; /* Menetapkan label ke blok untuk memberikan jarak */
+  margin-bottom: 10px; /* Jarak antara setiap label */
+}
+
+/* Style untuk elemen select */
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Style untuk hasil analisis */
+#result {
+  margin-top: 20px;
+}
+
+/* Style untuk teks kesalahan */
+.error {
+  color: red;
+}
+
+/* Style untuk judul */
+h1 {
+  text-align: center; /* Pusatkan judul */
+  margin-bottom: 30px; /* Jarak dari elemen lain */
+}
+
+/* Style untuk hasil analisis */
+#result {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style untuk teks hasil analisis */
+.result-text {
+  margin-bottom: 10px; /* Jarak antara setiap teks */
+}
+
+/* Style untuk teks skor */
+.score {
+  font-weight: bold; /* Teks tebal */
+  color: #4caf50; /* Warna hijau */
+}
+
+/* CSS untuk tombol navigasi dan submit */
+.container {
+  display: flex;
+  flex-direction: column; /* Menjadikan kontainer vertikal */
+  align-items: center; /* Menempatkan konten di tengah horizontal */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center; /* Menempatkan tombol navigasi di tengah */
+  margin-top: 20px; /* Menambahkan jarak atas */
+  margin-bottom: 20px; /* Menambahkan jarak bawah */
+}
+
+.pagination-btn {
+  padding: 10px 15px; /* Penyesuaian ukuran tombol */
+  background-color: #4caf50; /* Warna latar belakang hijau */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Efek transisi untuk perubahan warna latar belakang */
+  margin-right: 10px; /* Menambahkan jarak antara tombol navigasi */
+}
+
+.pagination-btn:last-child {
+  margin-right: 0; /* Hapus margin kanan dari tombol navigasi terakhir */
+}
+
+#needsForm {
+  margin-bottom: 20px; /* Menambahkan jarak antara form dan tombol navigasi */
+}
+
+#submitBtn {
+  padding: 10px 20px; /* Penyesuaian ukuran tombol */
+  background-color: #007bff; /* Warna latar belakang biru */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Efek transisi untuk perubahan warna latar belakang */
+  margin-top: 10px; /* Menambahkan jarak antara tombol navigasi dan tombol submit */
+}
