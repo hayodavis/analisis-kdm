@@ -42,29 +42,30 @@ document.addEventListener("DOMContentLoaded", function () {
     "Orang pikir saya lucu",
   ];
 
-  const form = document.getElementById("needsForm");
+  const form = document.getElementById("questionsForm");
   const prevPageBtn = document.getElementById("prevPage");
   const nextPageBtn = document.getElementById("nextPage");
-  const questionsPerPage = 5; // Ubah jumlah pertanyaan per halaman sesuai kebutuhan
+  const questionsPerPage = 5;
   let currentPage = 1;
+  const answers = {};
 
-  // Fungsi untuk menampilkan pertanyaan pada halaman tertentu
   function showQuestions(page) {
-    form.innerHTML = ""; // Bersihkan formulir sebelum menambahkan pertanyaan baru
+    form.innerHTML = ""; // Clear the form before adding new questions
     const startIndex = (page - 1) * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageQuestions = questions.slice(startIndex, endIndex);
 
     pageQuestions.forEach((question, index) => {
+      const questionIndex = startIndex + index + 1;
       const label = document.createElement("label");
       label.innerText = question;
 
       const select = document.createElement("select");
-      select.name = `question${startIndex + index + 1}`;
+      select.name = `question${questionIndex}`;
       select.required = true;
 
       const placeholder = document.createElement("option");
-      placeholder.value = ""; // Nilai placeholder kosong
+      placeholder.value = ""; // Empty value for placeholder
       placeholder.innerText = "Pilih jawaban";
       placeholder.disabled = true;
       placeholder.selected = true;
@@ -84,15 +85,21 @@ document.addEventListener("DOMContentLoaded", function () {
         select.appendChild(opt);
       });
 
+      if (answers[`question${questionIndex}`]) {
+        select.value = answers[`question${questionIndex}`];
+      }
+
+      select.addEventListener("change", function () {
+        answers[`question${questionIndex}`] = select.value;
+      });
+
       form.appendChild(label);
       form.appendChild(select);
     });
   }
 
-  // Tampilkan pertanyaan untuk halaman pertama saat memuat
   showQuestions(currentPage);
 
-  // Fungsi untuk menavigasi ke halaman sebelumnya
   prevPageBtn.addEventListener("click", function () {
     if (currentPage > 1) {
       currentPage--;
@@ -100,7 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Fungsi untuk menavigasi ke halaman berikutnya
   nextPageBtn.addEventListener("click", function () {
     const totalPages = Math.ceil(questions.length / questionsPerPage);
     if (currentPage < totalPages) {
@@ -109,47 +115,41 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Fungsi untuk menghitung skor dan menampilkan hasil analisis
   document.getElementById("submitBtn").addEventListener("click", function () {
     const formData = new FormData(form);
-    const scores = {
-      kasihSayang: 0,
-      kekuasaan: 0,
-      kebebasan: 0,
-      kesenangan: 0,
-    };
+    let kasihSayang = 0;
+    let kekuasaan = 0;
+    let kebebasan = 0;
+    let kesenangan = 0;
     let allAnswered = true;
 
-    for (let [key, value] of formData.entries()) {
-      if (value === "") {
-        // Jika placeholder terpilih, anggap belum diisi
+    for (let i = 1; i <= questions.length; i++) {
+      if (!answers[`question${i}`]) {
         allAnswered = false;
         break;
       }
 
-      // Perhitungan skor berdasarkan kelompok pertanyaan
-      const questionNumber = parseInt(key.replace("question", ""), 10);
-      if (questionNumber >= 1 && questionNumber <= 10) {
-        scores.kasihSayang += parseInt(value, 10);
-      } else if (questionNumber >= 11 && questionNumber <= 20) {
-        scores.kekuasaan += parseInt(value, 10);
-      } else if (questionNumber >= 21 && questionNumber <= 30) {
-        scores.kebebasan += parseInt(value, 10);
-      } else if (questionNumber >= 31 && questionNumber <= 40) {
-        scores.kesenangan += parseInt(value, 10);
+      const value = parseInt(answers[`question${i}`], 10);
+      if (i >= 1 && i <= 10) {
+        kasihSayang += value;
+      } else if (i >= 11 && i <= 20) {
+        kekuasaan += value;
+      } else if (i >= 21 && i <= 30) {
+        kebebasan += value;
+      } else if (i >= 31 && i <= 40) {
+        kesenangan += value;
       }
     }
 
     const resultDiv = document.getElementById("result");
 
-    // Menampilkan hasil analisis berdasarkan kelompok pertanyaan
     if (allAnswered) {
       resultDiv.innerHTML = `
-            <h2>Hasil Analisis</h2>
-            <p>Kasih Sayang & Rasa Diterima: ${scores.kasihSayang}</p>
-            <p>Kekuasaan: ${scores.kekuasaan}</p>
-            <p>Kebebasan: ${scores.kebebasan}</p>
-            <p>Kesenangan: ${scores.kesenangan}</p>
+              <h2>Hasil Analisis</h2>
+              <p>Kasih Sayang & Rasa Diterima: ${kasihSayang}</p>
+              <p>Kekuasaan: ${kekuasaan}</p>
+              <p>Kebebasan: ${kebebasan}</p>
+              <p>Kesenangan: ${kesenangan}</p>
           `;
     } else {
       resultDiv.innerHTML = `<h2>Error</h2><p>Pastikan semua pertanyaan telah dijawab.</p>`;

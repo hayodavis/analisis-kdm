@@ -102,3 +102,12 @@ h1 {
   transition: background-color 0.3s ease; /* Efek transisi untuk perubahan warna latar belakang */
   margin-top: 10px; /* Menambahkan jarak antara tombol navigasi dan tombol submit */
 }
+
+/* Style untuk elemen input */
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
